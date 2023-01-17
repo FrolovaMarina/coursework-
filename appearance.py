@@ -44,6 +44,7 @@ class Playboard:
         background_image = pg.transform.scale(background_image, WINDOW_SIZE)
         self.__screen.blit(background_image, (0, 0))
 
+    # отрисовка игровой доски     
     def __draw_playboard(self):
         total_size = self.__count * self.__size
         # номера полей
@@ -83,6 +84,7 @@ class Playboard:
                                  i * self.__size + (self.__size - number.get_rect().height) // 2))
         return n_rows, n_lines
 
+    # создание ячеек 
     def __create_cells(self):
         group = pg.sprite.Group()
         even_count = (self.__count % 2 == 0)
@@ -148,6 +150,7 @@ class Playboard:
                 self.__pick_cell(released_cell)
         self.__update()
 
+    # списки полей белых и чёрных шашек     
     def __black_or_white(self):
         for item in self.__items_sprite:
             if item.icolour == Checker1.icolour:
@@ -156,6 +159,7 @@ class Playboard:
                 self.__items_black.append(item.field_name)
         return self.__items_white, self.__items_black
 
+    # обновление доски 
     def __update(self):
         print(" ")
         self.__cells_sprite.draw(self.__screen)
@@ -213,6 +217,7 @@ class Playboard:
                 else:
                     self.__picked_checker = None
 
+    # ход компьютера                
     def __computer_turn(self):
         field_name = random.choice(self.__items_black)
         for cell in self.__cells_sprite:
@@ -275,6 +280,7 @@ class Playboard:
         else:
             self.__picked_checker = None
 
+    # чёрные выиграли         
     def __black_win(self):
         win = pg.display.set_mode((200, 70))
         win.fill((167, 200, 250))
@@ -289,6 +295,7 @@ class Playboard:
         time.sleep(10)
         exit()
 
+    # белые выиграли   
     def __white_win(self):
         win = pg.display.set_mode((200, 70))
         win.fill((237, 186, 245))
@@ -303,6 +310,7 @@ class Playboard:
         time.sleep(10)
         exit()
 
+    # поиск возможного лучшего хода для чёрных     
     def __the_best_choice(self):
         self.__best_choice = False
         for i in self.__items_black:
@@ -325,6 +333,7 @@ class Playboard:
             except Exception:
                 continue
 
+    # сделать ход белой шашкой             
     def __wchecker_step(self, cells):
         self.__picked_checker.rect = cells.rect
         self.__items_white.remove(self.__picked_checker.field_name)
@@ -363,6 +372,7 @@ class Playboard:
         if self.__next_turn == 'black':
             self.__computer_turn()
 
+    # сделать ход чёрной шашкой        
     def __bchecker_step(self):
         for cell in self.__cells_sprite:
             if cell.field_name == self.__field_cell:
@@ -399,11 +409,13 @@ class Playboard:
         self.__next_turn = 'white'
         print("*Ход чёрных сделан!*")
 
+    # простой ход для белых шашек     
     def __move_wcheckers(self, field_name):
         directions = DIRECTIONS[field_name[0]]
         moves = list(map(lambda el: el + str(int(field_name[1]) + 1), directions))
         return moves
 
+    # простой ход для дамок 
     def __move_queens(self, field_name):
         self.__diagonal_1 = []
         self.__diagonal_2 = []
@@ -447,6 +459,7 @@ class Playboard:
                 n += 1
         return variants
 
+    # взятие для белых шашек
     def __hiting_move_wcheckers(self, field_name):
         if self.__field_checker not in self.__active_Wcheckers:
             return field_name
@@ -491,6 +504,7 @@ class Playboard:
                 except Exception:
                     break
 
+    # взятие для белой дамки                 
     def __hiting_move_wqueens(self, field_name):
         if self.__field_checker not in self.__active_Wqueens:
             return field_name
@@ -515,6 +529,7 @@ class Playboard:
                 else:
                     return step
 
+    # взятие для чёрной дамки             
     def __hiting_move_bqueens(self, field_name):
         not_hit = []
         for i in self.__diagonal:
@@ -539,11 +554,13 @@ class Playboard:
                         hit_field = random.choice(hit)
                         return hit_field
 
+    # простой ход для чёрных шашек                  
     def __move_bcheckers(self, field_name):
         directions = DIRECTIONS[field_name[0]]
         moves = list(map(lambda el: el + str(int(field_name[1]) - 1), directions))
         return moves
 
+    # взятие для чёрных шашек 
     def __hiting_move_bcheckers(self, field_name):
         field_name = self.__field_checker
         if self.__field_checker[1] != 8:
@@ -593,6 +610,7 @@ class Playboard:
         classname = globals()[item_tuple[0]]
         return classname(self.__size, item_tuple[0], field_name)
 
+    # превращение в дамку
     def __transform_to_queen(self):
         for item in self.__items_sprite:
             if item.field_name == self.__picked_checker.field_name:
@@ -613,6 +631,7 @@ class Playboard:
                         self.__items_black.append(queen.field_name)
                         self.__items_black.remove(item.field_name)
 
+    # проверка на необходимость взятия  
     def __check_hitting(self):
         if self.__next_turn == 'white':
             self.__active_Wcheckers = []
@@ -692,6 +711,7 @@ class Playboard:
             else:
                 self.__bCHECK = False
 
+    # проверка на взятие для дамки 
     def __qcheck_hitting(self):
         if self.__next_turn == 'white':
             self.__active_Wqueens = []
