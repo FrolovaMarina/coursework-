@@ -704,7 +704,6 @@ class Playboard:
                             back = list(map(lambda el: el + str(int(any_item[1]) + 1), DIRECTIONS[any_item[0]]))
                             if any_item in self.__diagonal_1 and\
                                     back[0] not in self.__items_black and forward[0] not in self.__items_black:
-                                print("1!")
                                 self.__diagonal = self.__diagonal_1
                                 self.Q = any_item
                                 self.__active_Wqueens.append(field)
