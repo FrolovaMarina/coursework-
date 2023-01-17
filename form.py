@@ -94,9 +94,7 @@ class UiEntry(QtWidgets.QDialog):
             new_file.write(encoded_txt)
             decoded_txt = xtea_decode(self.lineEdit.text() + self.lineEdit_2.text())
             new_file = open("file.txt", "a")
-            print(decoded_txt)
-            new_file.write(decoded_txt)
-            print("ну поехали... или нет")
+            new_file.write(decoded_txt) 
             self.open_game()
 
     def open_game(self):
@@ -117,9 +115,3 @@ class UiEntry(QtWidgets.QDialog):
                     playboard.button_up(event.button, event.pos)
 
         pg.quit()
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#     window = UiEntry()
-#     window.show()
-#     sys.exit(app.exec_())
