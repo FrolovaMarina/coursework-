@@ -486,7 +486,7 @@ class Playboard:
                                     self.__items_black.remove(item.field_name)
                                     return result
                         elif self.__field_cell not in self.__can_Fjump:
-                            return result
+                            return field_name
                     if i in step_backward and self._Wback_jump == 1 and\
                             self.__jump_backward not in self.__items_black and self.__jump_backward in FIELD and\
                             i[0] in self.i:
@@ -500,7 +500,7 @@ class Playboard:
                                     self.__items_black.remove(item.field_name)
                                     return step_backward
                         elif self.__field_cell not in self.__can_Bjump:
-                            return step_backward
+                            return field_name
                 except Exception:
                     break
 
