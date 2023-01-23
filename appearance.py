@@ -191,9 +191,9 @@ class Playboard:
                                     cells.field_name not in self.__items_white:
                                 self.__wqCHECK = False
                                 self.__wchecker_step(cells)
-                            else:
-                                self.__wqCHECK = False
-                                self.__picked_checker = None
+#                             else:
+#                                 self.__wqCHECK = False
+#                                 self.__picked_checker = None
                         elif self.__field_cell in variants and self.__wCHECK is False:
                             self.__wchecker_step(cells)
                         elif self.__wCHECK is False:
@@ -723,21 +723,22 @@ class Playboard:
                             forward = self.__move_bcheckers(any_item)
                             back = list(map(lambda el: el + str(int(any_item[1]) + 1), DIRECTIONS[any_item[0]]))
                             if any_item in self.__diagonal_1 and\
-                                    back[0] not in self.__items_black and forward[0] not in self.__items_black:
+                                    back[0] not in self.__items_black and forward[1] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_1
                                 self.Q = any_item
+                                self.__active_Wcheckers.append(field)
                                 self.__active_Wqueens.append(field)
                                 self.__field = field
                                 break
                             elif any_item in self.__diagonal_2 and\
-                                    back[0] not in self.__items_black and forward[1] not in self.__items_black:
+                                    back[0] not in self.__items_black and forward[0] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_2
                                 self.Q = any_item
                                 self.__active_Wcheckers.append(field)
                                 self.__active_Wqueens.append(field)
                                 self.__field = field
                                 break
-                            elif any_item in self.__diagonal_3 and\
+                            elif any_item in self.__diagonal_3 and back[1] not in self.__items_black and\
                                     forward[0] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_3
                                 self.Q = any_item
@@ -745,11 +746,12 @@ class Playboard:
                                 self.__active_Wqueens.append(field)
                                 self.__field = field
                                 break
-                            elif any_item in self.__diagonal_4 and\
+                            elif any_item in self.__diagonal_4 and back[1] not in self.__items_black and\
                                     forward[1] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_4
                                 self.Q = any_item
                                 self.__active_Wqueens.append(field)
+                                self.__active_Wcheckers.append(field)
                                 self.__field = field
                                 break
                         except Exception:
