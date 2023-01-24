@@ -720,7 +720,7 @@ class Playboard:
                         try:
                             forward = self.__move_bcheckers(any_item)
                             back = list(map(lambda el: el + str(int(any_item[1]) + 1), DIRECTIONS[any_item[0]]))
-                                                        if any_item in self.__diagonal_1 and\
+                            if any_item in self.__diagonal_1 and\
                                     back[0] not in self.__items_black and forward[1] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_1
                                 self.Q = any_item
