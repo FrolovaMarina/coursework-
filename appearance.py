@@ -191,9 +191,6 @@ class Playboard:
                                     cells.field_name not in self.__items_white:
                                 self.__wqCHECK = False
                                 self.__wchecker_step(cells)
-#                             else:
-#                                 self.__wqCHECK = False
-#                                 self.__picked_checker = None
                         elif self.__field_cell in variants and self.__wCHECK is False:
                             self.__wchecker_step(cells)
                         elif self.__wCHECK is False:
@@ -382,7 +379,7 @@ class Playboard:
         self.__picked_checker.field_name = self.__field_cell
         self.__items_black.append(self.__field_cell)
         if self.__picked_checker.field_name in BLACK_QUEEN_FIELD and\
-                self.__picked_checker.field_name not in self.__queens_black:
+               self.__field_checker not in self.__queens_black:
             self.__transform_to_queen()
         elif self.__field_checker in self.__queens_black:
             self.__queens_black.remove(self.__field_checker)
@@ -393,17 +390,18 @@ class Playboard:
             self.__white_win()
         if self.__bCHECK is True:
             self.__check_hitting()
-            if self.__bCHECK is True and self.__picked_checker.field_name in self.__active_Bcheckers:
+            if self.__bCHECK is True and self.__picked_checker.field_name in self.__active_Bcheckers and\
+                    self.__picked_checker.field_name not in self.__queens_black:
                 time.sleep(0.5)
                 self.__field_checker = self.__picked_checker.field_name
                 self.__field_cell = random.choice(self.__hiting_move_bcheckers(self.__CHECK_HITTING))
                 self.__bchecker_step()
-        elif self.__bqCHECK is True:
-            self.__qCHECK_HITTING = self.__qcheck_hitting()
-            if self.__bqCHECK is True:
-                time.sleep(0.5)
-                self.__field_cell = self.__hiting_move_bqueens(self.__qCHECK_HITTING)
-                self.__bchecker_step()
+            elif self.__picked_checker.field_name in self.__queens_black:
+                self.__qCHECK_HITTING = self.__qcheck_hitting()
+                if self.__bqCHECK is True:
+                    self.__field_checker = self.__picked_checker.field_name
+                    time.sleep(0.5)
+                    self.__computer_turn()
         self.N = 0
         self.__picked_checker = None
         self.__next_turn = 'white'
@@ -544,13 +542,13 @@ class Playboard:
                         hit.remove(self.Q)
                 for item in self.__items_sprite:
                     if item.field_name == i:
+                        if not hit:
+                            self.__bqCHECK = False
+                            return field_name
                         self.__items_sprite.remove(item)
                         self.__items_white.remove(item.field_name)
                         if item.field_name in self.__queens_white:
                             self.__queens_white.remove(item.field_name)
-                        if not hit:
-                            self.__bqCHECK = False
-                            return self.Q
                         hit_field = random.choice(hit)
                         return hit_field
 
@@ -722,7 +720,7 @@ class Playboard:
                         try:
                             forward = self.__move_bcheckers(any_item)
                             back = list(map(lambda el: el + str(int(any_item[1]) + 1), DIRECTIONS[any_item[0]]))
-                            if any_item in self.__diagonal_1 and\
+                                                        if any_item in self.__diagonal_1 and\
                                     back[0] not in self.__items_black and forward[1] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_1
                                 self.Q = any_item
@@ -731,7 +729,7 @@ class Playboard:
                                 self.__field = field
                                 break
                             elif any_item in self.__diagonal_2 and\
-                                    back[0] not in self.__items_black and forward[0] not in self.__items_black:
+                                    back[1] not in self.__items_black and forward[0] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_2
                                 self.Q = any_item
                                 self.__active_Wcheckers.append(field)
@@ -746,7 +744,7 @@ class Playboard:
                                 self.__active_Wqueens.append(field)
                                 self.__field = field
                                 break
-                            elif any_item in self.__diagonal_4 and back[1] not in self.__items_black and\
+                            elif any_item in self.__diagonal_4 and back[0] not in self.__items_black and\
                                     forward[1] not in self.__items_black:
                                 self.__diagonal = self.__diagonal_4
                                 self.Q = any_item
@@ -804,7 +802,7 @@ class Playboard:
                                     back[1] not in self.__items_white and forward[0] not in self.__items_white:
                                 self.__diagonal = self.__diagonal_4
                                 self.Q = any_item
-                                self.__active_Bcheckers.append(field
+                                self.__active_Bcheckers.append(field)
                                 self.__active_Bqueens.append(field)
                                 self.__field = field
                                 break
