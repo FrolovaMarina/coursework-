@@ -778,7 +778,6 @@ class Playboard:
                                     back[1] not in self.__items_white and forward[0] not in self.__items_white:
                                 self.__diagonal = self.__diagonal_1
                                 self.Q = any_item
-                                self.__active_Bcheckers.append(field)
                                 self.__active_Bqueens.append(field)
                                 self.__field = field
                                 break
@@ -786,7 +785,6 @@ class Playboard:
                                     back[0] not in self.__items_white and forward[1] not in self.__items_white:
                                 self.__diagonal = self.__diagonal_2
                                 self.Q = any_item
-                                self.__active_Bcheckers.append(field)
                                 self.__active_Bqueens.append(field)
                                 self.__field = field
                                 break
@@ -794,7 +792,6 @@ class Playboard:
                                     back[0] not in self.__items_white and forward[1] not in self.__items_white:
                                 self.__diagonal = self.__diagonal_3
                                 self.Q = any_item
-                                self.__active_Bcheckers.append(field)
                                 self.__active_Bqueens.append(field)
                                 self.__field = field
                                 break
@@ -802,7 +799,6 @@ class Playboard:
                                     back[1] not in self.__items_white and forward[0] not in self.__items_white:
                                 self.__diagonal = self.__diagonal_4
                                 self.Q = any_item
-                                self.__active_Bcheckers.append(field)
                                 self.__active_Bqueens.append(field)
                                 self.__field = field
                                 break
